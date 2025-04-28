@@ -1,1 +1,25 @@
-<router-outlet />
+<div class="d-flex" id="wrapper">
+    <!-- Sidebar -->
+    <div *ngIf="isLoggedIn()" class="bg-light border-end" id="sidebar-wrapper" style="min-height: 100vh; width: 250px;">
+        <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold border-bottom">
+            SmartEvents
+        </div>
+        <div class="list-group list-group-flush my-3">
+            <a routerLink="/events" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                My Events
+            </a>
+            <a routerLink="/account" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                Account
+            </a>
+            <a (click)="logout()" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold">
+                Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper" class="w-100 p-4">
+        <router-outlet></router-outlet>
+    </div>
+
+</div>

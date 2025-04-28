@@ -1,6 +1,7 @@
 import { signal, computed, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AuthState {
 
     private _token = signal<string | null>(localStorage.getItem('token') || null);
@@ -10,6 +11,8 @@ export class AuthState {
     isLoggedIn = computed(() => this._token() !== null);
     token = computed(() => this._token());
     userId = computed(() => this._userId());
+
+    constructor(private router: Router) { }
 
     setToken(newToken: string | null) {
         this._token.set(newToken);
@@ -32,5 +35,6 @@ export class AuthState {
     logout() {
         this.setToken(null);
         this.setUserId(null);
+        this.router.navigate(['/login'])
     }
 }
