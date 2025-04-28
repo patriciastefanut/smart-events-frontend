@@ -1,0 +1,45 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-4 shadow" style="width: 100%; max-width: 400px;">
+        <h3 class="text-center mb-4">Login</h3>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+            <!-- Email Field -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" id="email" formControlName="email" class="form-control"
+                    [class.is-invalid]="form.get('email')?.touched && form.get('email')?.invalid"
+                    placeholder="Enter your email">
+                <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid" class="invalid-feedback">
+                    <div *ngIf="form.get('email')?.errors?.['required']">Email is required.</div>
+                    <div *ngIf="form.get('email')?.errors?.['email']">Please enter a valid email address.</div>
+                </div>
+            </div>
+
+            <!-- Password Field -->
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" formControlName="password" class="form-control"
+                    [class.is-invalid]="form.get('password')?.touched && form.get('password')?.invalid"
+                    placeholder="Enter your password">
+                <div *ngIf="form.get('password')?.touched && form.get('password')?.invalid" class="invalid-feedback">
+                    <div *ngIf="form.get('password')?.errors?.['required']">Password is required.</div>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div *ngIf="errorMessage" class="alert alert-danger">
+                {{ errorMessage }}
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary w-100" [disabled]="isLoading">
+                <span *ngIf="!isLoading">Login</span>
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status"
+                    aria-hidden="true"></span>
+                <span *ngIf="isLoading" class="ms-2">Loading...</span>
+            </button>
+
+        </form> <!-- ✅ Closing form properly inside the card -->
+    </div>
+</div>

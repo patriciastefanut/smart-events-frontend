@@ -1,6 +1,7 @@
-import { signal, computed } from '@angular/core';
+import { signal, computed, Injectable } from '@angular/core';
 import { User } from '../models/user';
 
+@Injectable({providedIn: 'root'})
 export class UserState {
 
     private _user = signal<User | null>(null);

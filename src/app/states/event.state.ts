@@ -1,6 +1,7 @@
-import { signal, computed } from '@angular/core';
+import { signal, computed, Injectable } from '@angular/core';
 import { Event } from '../models/event';
 
+@Injectable({providedIn: 'root'})
 export class EventState {
 
     private _event = signal<Event | null>(null);

@@ -1,6 +1,7 @@
-import { signal, computed } from '@angular/core';
+import { signal, computed, Injectable } from '@angular/core';
 import { Feedback } from '../models/feedback';
 
+@Injectable({providedIn: 'root'})
 export class FeedbackState {
 
     private _feedback = signal<Feedback | null>(null);

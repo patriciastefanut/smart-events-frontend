@@ -1,0 +1,80 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-4 shadow" style="width: 100%; max-width: 500px;">
+        <h3 class="text-center mb-4">Register</h3>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+            <!-- First Name -->
+            <div class="mb-3">
+                <label for="firstname" class="form-label">First Name</label>
+                <input type="text" id="firstname" formControlName="firstname" class="form-control"
+                    [class.is-invalid]="form.get('firstname')?.touched && form.get('firstname')?.invalid"
+                    placeholder="Enter your first name">
+                <div *ngIf="form.get('firstname')?.touched && form.get('firstname')?.invalid" class="invalid-feedback">
+                    <div *ngIf="form.get('firstname')?.errors?.['required']">First name is required.</div>
+                </div>
+            </div>
+
+            <!-- Last Name -->
+            <div class="mb-3">
+                <label for="lastname" class="form-label">Last Name</label>
+                <input type="text" id="lastname" formControlName="lastname" class="form-control"
+                    [class.is-invalid]="form.get('lastname')?.touched && form.get('lastname')?.invalid"
+                    placeholder="Enter your last name">
+                <div *ngIf="form.get('lastname')?.touched && form.get('lastname')?.invalid" class="invalid-feedback">
+                    <div *ngIf="form.get('lastname')?.errors?.['required']">Last name is required.</div>
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" id="email" formControlName="email" class="form-control"
+                    [class.is-invalid]="form.get('email')?.touched && form.get('email')?.invalid"
+                    placeholder="Enter your email">
+                <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid" class="invalid-feedback">
+                    <div *ngIf="form.get('email')?.errors?.['required']">Email is required.</div>
+                    <div *ngIf="form.get('email')?.errors?.['email']">Please enter a valid email address.</div>
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" formControlName="password" class="form-control"
+                    [class.is-invalid]="form.get('password')?.touched && form.get('password')?.invalid"
+                    placeholder="Enter your password">
+                <div *ngIf="form.get('password')?.touched && form.get('password')?.invalid" class="invalid-feedback">
+                    <div *ngIf="form.get('password')?.errors?.['required']">Password is required.</div>
+                </div>
+            </div>
+
+            <!-- Password Confirm -->
+            <div class="mb-3">
+                <label for="passwordConfirm" class="form-label">Confirm Password</label>
+                <input type="password" id="passwordConfirm" formControlName="passwordConfirm" class="form-control"
+                    [class.is-invalid]="form.get('passwordConfirm')?.touched && form.get('passwordConfirm')?.invalid"
+                    placeholder="Confirm your password">
+                <div *ngIf="form.get('passwordConfirm')?.touched && form.get('passwordConfirm')?.invalid"
+                    class="invalid-feedback">
+                    <div *ngIf="form.get('passwordConfirm')?.errors?.['required']">Confirm password is required.</div>
+                    <div *ngIf="form.get('passwordConfirm')?.errors?.['passwordMismatch']">Passwords do not match.</div>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div *ngIf="errorMessage" class="alert alert-danger">
+                {{ errorMessage }}
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary w-100" [disabled]="isLoading">
+                <span *ngIf="!isLoading">Register</span>
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status"
+                    aria-hidden="true"></span>
+                <span *ngIf="isLoading" class="ms-2">Loading...</span>
+            </button>
+
+        </form>
+    </div>
+</div>
