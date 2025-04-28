@@ -8,8 +8,8 @@ export class AuthState {
 
 
     isLoggedIn = computed(() => this._token() !== null);
-    token = computed(() => this._token);
-    userId = computed(() => this._userId);
+    token = computed(() => this._token());
+    userId = computed(() => this._userId());
 
     setToken(newToken: string | null) {
         this._token.set(newToken);

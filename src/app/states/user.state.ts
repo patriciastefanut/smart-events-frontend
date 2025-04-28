@@ -6,7 +6,7 @@ export class UserState {
 
     private _user = signal<User | null>(null);
 
-    user = computed(() => this._user);
+    user = computed(() => this._user());
 
     setUser(newUser: User | null) {
         this._user.set(newUser);

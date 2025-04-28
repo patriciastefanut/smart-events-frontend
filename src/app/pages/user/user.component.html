@@ -1,0 +1,88 @@
+<div class="container py-5">
+
+    <!-- Profile Picture Section -->
+    <div class="card mb-4">
+        <div class="card-body text-center">
+            <div class="mb-3">
+                <img [src]="'http://localhost:3000/uploads/'+ user?.profilePicture || 'https://via.placeholder.com/150'"
+                    alt="Profile Picture" class="rounded-circle img-fluid"
+                    style="width: 150px; height: 150px; object-fit: cover;">
+            </div>
+
+            <form [formGroup]="profileForm" (ngSubmit)="onProfilePictureSubmit()" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <input type="file" class="form-control" (change)="onProfilePictureSelected($event)"
+                        accept="image/*">
+                </div>
+
+                <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+                    <span *ngIf="!isLoading">Upload New Picture</span>
+                    <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status"
+                        aria-hidden="true"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- User Info Section -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form [formGroup]="userForm" (ngSubmit)="onUserSubmit()">
+
+                <div class="mb-3">
+                    <label class="form-label">First Name</label>
+                    <input type="text" formControlName="firstname" class="form-control" [readonly]="!isEditing">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" formControlName="lastname" class="form-control" [readonly]="!isEditing">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" formControlName="email" class="form-control" [readonly]="!isEditing">
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-warning" (click)="isEditing = !isEditing">
+                        {{ isEditing ? 'Cancel' : 'Edit' }}
+                    </button>
+
+                    <button *ngIf="isEditing" type="submit" class="btn btn-success">
+                        Save Changes
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- Password Change Section -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()">
+
+                <div class="mb-3">
+                    <label class="form-label">Current Password</label>
+                    <input type="password" formControlName="currentPassword" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">New Password</label>
+                    <input type="password" formControlName="newPassword" class="form-control">
+                </div>
+
+                <button type="submit" class="btn btn-danger">
+                    Change Password
+                </button>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- Error / Success Messages -->
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+</div>
