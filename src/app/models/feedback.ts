@@ -1,4 +1,4 @@
-export interface FeedbackDTO {
+export interface Feedback {
     id: string,
     event: string;
     email: string;

@@ -12,7 +12,7 @@ interface Budget {
     miscellaneous: number;
 }
 
-export interface WeddingEvent {
+export interface Event {
     id: string;
     title: string;
     type: string;
