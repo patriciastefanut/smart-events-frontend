@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { EventService } from '../../services/event.service';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Event } from '../../models/event';
 
 @Component({
   selector: 'app-manual-event-form',
@@ -12,14 +13,21 @@ import { Router, RouterModule } from '@angular/router';
   styleUrls: ['./manual-event-form.component.css'],
 })
 export class ManualEventFormComponent {
-  eventForm: FormGroup;
+  eventId: string | null = null;
+  eventForm!: FormGroup;
   budgetKeys = ['venue', 'catering', 'equipment', 'staff', 'miscellaneous'];
 
   constructor(
     private fb: FormBuilder,
     private eventService: EventService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
+    this.eventId = this.route.snapshot.paramMap.get('eventId');
+    this.eventId ? this.initFilledForm() : this.initEmptyForm();
+  }
+
+  initEmptyForm() {
     this.eventForm = this.fb.group({
       title: ['', Validators.required],
       type: ['', Validators.required],
@@ -39,16 +47,70 @@ export class ManualEventFormComponent {
       requiredStaff: this.fb.array([]),
       notes: this.fb.array([]),
     });
-
-    // ✅ Prevent render errors by initializing with 1 schedule item
     this.addSchedule();
+  }
+
+  initFilledForm() {
+    this.initEmptyForm();
+    this.eventService.getEventById(this.eventId!).subscribe({
+      next: (res) => {
+        const event: Event = res['event'];
+        this.eventForm.patchValue({
+          title: event.title,
+          type: event.type,
+          description: event.description,
+          from: this.formatDateForInput(event.from),
+          until: this.formatDateForInput(event.until),
+          guestCount: event.guestCount,
+          locationName: event.location.name,
+          locationAddress: event.location.address,
+          locationCost: event.location.cost,
+          venue: event.budget.venue,
+          catering: event.budget.catering,
+          equipment: event.budget.equipment,
+          staff: event.budget.staff,
+          miscellaneous: event.budget.miscellaneous,
+        });
+
+        this.setArrayValues(this.schedule, event.schedule.map(s => ({
+          time: this.formatDateForInput(s.time),
+          activity: s.activity
+        })));
+
+        this.setArrayValues(this.requiredStaff, event.requiredStaff);
+        this.setArrayValues(this.notes, event.notes);
+      },
+      error: (err) => console.error('Failed to load event:', err),
+    });
+  }
+
+  formatDateForInput(date: Date | string): string {
+    const d = new Date(date);
+    return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+  }
+
+  setArrayValues(array: FormArray, values: any[]) {
+    array.clear();
+    values.forEach(val => {
+      if (typeof val === 'string') {
+        array.push(this.fb.control(val, Validators.required));
+      } else {
+        array.push(this.fb.group({
+          time: [val.time, Validators.required],
+          activity: [val.activity, Validators.required]
+        }));
+      }
+    });
   }
 
   get schedule(): FormArray {
     return this.eventForm.get('schedule') as FormArray;
   }
   addSchedule() {
-    this.schedule.push(this.fb.group({ time: ['', Validators.required], activity: ['', Validators.required] }));
+    this.schedule.push(this.fb.group({
+      time: ['', Validators.required],
+      activity: ['', Validators.required]
+    }));
   }
   removeSchedule(index: number) {
     this.schedule.removeAt(index);
@@ -78,7 +140,7 @@ export class ManualEventFormComponent {
     if (this.eventForm.invalid) return;
 
     const f = this.eventForm.value;
-    const newEvent = {
+    const payload = {
       title: f.title,
       type: f.type,
       description: f.description,
@@ -104,16 +166,18 @@ export class ManualEventFormComponent {
       })),
       requiredStaff: f.requiredStaff,
       notes: f.notes,
-      createdAt: new Date(),
       updatedAt: new Date(),
     };
 
-    this.eventService.createEvent(newEvent).subscribe({
+    const request$ = this.eventId
+      ? this.eventService.updateEvent(this.eventId, payload)
+      : this.eventService.createEvent({ ...payload, createdAt: new Date() });
+
+    request$.subscribe({
       next: () => {
-        console.log('Event created:', newEvent);
         this.router.navigate(['/events']);
       },
-      error: (err) => console.error('Error creating event:', err),
+      error: (err) => console.error('Error saving event:', err),
     });
   }
 }

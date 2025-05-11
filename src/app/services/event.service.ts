@@ -52,7 +52,7 @@ export class EventService {
         return this.http.get<Response>(`${this.url}`);
     }
 
-    getEventByIdAndOrganizer(eventId: string): Observable<Response> {
+    getEventById(eventId: string): Observable<Response> {
         return this.http.get<Response>(`${this.url}/${eventId}`);
     }
 

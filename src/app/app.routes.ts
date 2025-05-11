@@ -6,6 +6,7 @@ import { UserComponent } from './pages/user/user.component';
 import { EventsComponent } from './pages/events/events.component';
 import { AiEventFormComponent } from './pages/ai-event-form/ai-event-form.component';
 import { ManualEventFormComponent } from './pages/manual-event-form/manual-event-form.component';
+import { ViewEventComponent } from './pages/view-event/view-event.component';
 
 export const routes: Routes = [
     {
@@ -25,6 +26,12 @@ export const routes: Routes = [
     },
     {
         path: 'events/create-manual', component: ManualEventFormComponent,
+    },
+    {
+        path: 'events/:eventId', component: ViewEventComponent,
+    },
+    {
+        path: 'events/:eventId/update', component: ManualEventFormComponent,
     },
     {
         path: 'not-found', component: NotFoundComponent
