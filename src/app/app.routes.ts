@@ -3,6 +3,9 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { UserComponent } from './pages/user/user.component';
+import { EventsComponent } from './pages/events/events.component';
+import { AiEventFormComponent } from './pages/ai-event-form/ai-event-form.component';
+import { ManualEventFormComponent } from './pages/manual-event-form/manual-event-form.component';
 
 export const routes: Routes = [
     {
@@ -13,6 +16,15 @@ export const routes: Routes = [
     },
     {
         path: 'account', component: UserComponent,
+    },
+    {
+        path: 'events', component: EventsComponent,
+    },
+    {
+        path: 'events/create-ai', component: AiEventFormComponent,
+    },
+    {
+        path: 'events/create-manual', component: ManualEventFormComponent,
     },
     {
         path: 'not-found', component: NotFoundComponent

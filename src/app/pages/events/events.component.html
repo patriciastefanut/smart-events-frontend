@@ -1,0 +1,38 @@
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center">
+            <a [routerLink]="'/'" class="me-3 text-decoration-none">
+                <i class="bi bi-arrow-left" style="font-size: 1.5rem;"></i>
+            </a>
+            <h2 class="mb-0">My Events</h2>
+        </div>
+
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                Add New
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" (click)="addNewEvent('ai')">AI Generated</a></li>
+                <li><a class="dropdown-item" (click)="addNewEvent('manual')">Manual</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div *ngFor="let event of events" class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ event.title }}</h5>
+                    <p class="card-text">
+                        {{ event.type }}<br>
+                        {{ event.location.name }}<br>
+                        {{ event.from | date:'medium' }}
+                    </p>
+                    <button class="btn btn-outline-primary" (click)="viewEvent(event.id)">View Details</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

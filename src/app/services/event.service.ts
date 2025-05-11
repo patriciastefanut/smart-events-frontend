@@ -40,8 +40,8 @@ export class EventService {
     }
 
     // Private Routes - Events
-    createEventPlanDraft(data: any): Observable<Response> {
-        return this.http.post<Response>(`${this.url}/drafts`, data);
+    aiGenerateEvent(data: any): Observable<Response> {
+        return this.http.post<Response>(`${this.url}/ai`, data);
     }
 
     createEvent(data: any): Observable<Response> {

@@ -24,7 +24,10 @@ export interface Event {
     location: EventLocation;
     budget: Budget;
     currency: string;
-    schedule: string[];
+    schedule: [{
+        time: Date,
+        activity: String
+    }];
     requiredStaff: string[];
     notes: string[];
     createdAt: Date;
