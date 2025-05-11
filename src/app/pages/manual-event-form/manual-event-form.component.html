@@ -1,0 +1,84 @@
+<form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="p-3">
+    
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center">
+            <a routerLink="/events" class="me-3 text-decoration-none">
+                <i class="bi bi-arrow-left" style="font-size: 1.5rem;"></i>
+            </a>
+            <h2 class="mb-0">Create Event</h2>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input formControlName="title" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Type</label>
+        <input formControlName="type" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea formControlName="description" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">From</label>
+        <input type="datetime-local" formControlName="from" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Until</label>
+        <input type="datetime-local" formControlName="until" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Guest Count</label>
+        <input type="number" formControlName="guestCount" class="form-control" />
+    </div>
+
+    <h5>Location</h5>
+    <div class="mb-3">
+        <input formControlName="locationName" class="form-control mb-1" placeholder="Name" />
+        <input formControlName="locationAddress" class="form-control mb-1" placeholder="Address" />
+        <input type="number" formControlName="locationCost" class="form-control" placeholder="Cost" />
+    </div>
+
+    <h5>Budget</h5>
+    <div *ngFor="let key of budgetKeys" class="mb-2">
+        <label class="form-label">{{ key | titlecase }}</label>
+        <input type="number" [formControlName]="key" class="form-control" />
+    </div>
+
+    <h5>Schedule</h5>
+    <div formArrayName="schedule">
+        <div *ngFor="let item of schedule.controls; let i = index" [formGroupName]="i" class="mb-3">
+            <input type="datetime-local" formControlName="time" class="form-control mb-1" />
+            <input formControlName="activity" class="form-control mb-1" placeholder="Activity" />
+            <button type="button" class="btn btn-danger btn-sm" (click)="removeSchedule(i)">Remove</button>
+        </div>
+    </div>
+    <button type="button" class="btn btn-outline-secondary btn-sm mb-3" (click)="addSchedule()">Add Schedule</button>
+
+    <h5>Required Staff</h5>
+    <div formArrayName="requiredStaff" class="mb-3">
+        <div *ngFor="let staff of requiredStaff.controls; let i = index" class="d-flex mb-2">
+            <input [formControlName]="i" class="form-control me-2" />
+            <button type="button" class="btn btn-sm btn-danger" (click)="removeStaff(i)">Remove</button>
+        </div>
+        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="addStaff()">Add Staff</button>
+    </div>
+
+    <h5>Notes</h5>
+    <div formArrayName="notes" class="mb-3">
+        <div *ngFor="let note of notes.controls; let i = index" class="d-flex mb-2">
+            <input [formControlName]="i" class="form-control me-2" />
+            <button type="button" class="btn btn-sm btn-danger" (click)="removeNote(i)">Remove</button>
+        </div>
+        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="addNote()">Add Note</button>
+    </div>
+
+    <button type="submit" class="btn btn-success">Submit Event</button>
+</form>
