@@ -1,0 +1,47 @@
+<div *ngIf="event">
+    <p><strong>Type:</strong> {{ event.type }}</p>
+    <p><strong>Description:</strong> {{ event.description }}</p>
+    <p><strong>Date:</strong> {{ event.from | date:'medium' }} - {{ event.until | date:'medium' }}</p>
+    <p><strong>Guest Count:</strong> {{ event.guestCount }}</p>
+
+    <hr>
+    <h4>Location</h4>
+    <p><strong>Name:</strong> {{ event.location.name }}</p>
+    <p><strong>Address:</strong> {{ event.location.address }}</p>
+    <p><strong>Cost:</strong> {{ event.location.cost | currency:event.currency }}</p>
+
+    <hr>
+    <h4>Budget</h4>
+    <ul>
+        <li>Venue: {{ event.budget.venue | currency:event.currency }}</li>
+        <li>Catering: {{ event.budget.catering | currency:event.currency }}</li>
+        <li>Equipment: {{ event.budget.equipment | currency:event.currency }}</li>
+        <li>Staff: {{ event.budget.staff | currency:event.currency }}</li>
+        <li>Miscellaneous: {{ event.budget.miscellaneous | currency:event.currency }}</li>
+    </ul>
+
+    <hr>
+    <h4>Schedule</h4>
+    <ul>
+        <li *ngFor="let item of event.schedule">
+            {{ item.time | date:'short' }} — {{ item.activity }}
+        </li>
+    </ul>
+
+    <hr>
+    <h4>Required Staff</h4>
+    <ul>
+        <li *ngFor="let staff of event.requiredStaff">{{ staff }}</li>
+    </ul>
+
+    <hr>
+    <h4>Notes</h4>
+    <ul>
+        <li *ngFor="let note of event.notes">{{ note }}</li>
+    </ul>
+
+    <hr>
+    <p><strong>Created:</strong> {{ event.createdAt | date:'medium' }}</p>
+    <p><strong>Updated:</strong> {{ event.updatedAt | date:'medium' }}</p>
+
+</div>
