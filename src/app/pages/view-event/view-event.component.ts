@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Event } from '../../models/event';
 import { EventState } from '../../states/event.state';
+import { InvitationsState } from '../../states/invitations.state';
 
 @Component({
   selector: 'app-view-event',
@@ -18,6 +19,7 @@ export class ViewEventComponent implements OnInit {
 
   constructor(private api: EventService,
     private eventState: EventState,
+    private invitationState: InvitationsState,
     private route: ActivatedRoute,
     private router: Router) {
     effect(() => {
@@ -33,10 +35,30 @@ export class ViewEventComponent implements OnInit {
       return;
     }
 
+
+    this.getEvent(eventId);
+    this.getInvitations(eventId);
+
+  }
+
+
+  getEvent(eventId: string) {
     this.api.getEventById(eventId).subscribe({
       next: (res) => {
         console.log(res);
         this.eventState.setEvent(res['event']);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  getInvitations(eventId: string) {
+    this.api.getInvitationsByEvent(eventId).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.invitationState.setInvitations(res['invitations']);
       },
       error: (err) => {
         console.log(err);

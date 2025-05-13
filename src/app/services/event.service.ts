@@ -73,12 +73,12 @@ export class EventService {
         return this.http.post<Response>(`${this.url}/${eventId}/invitations`, data);
     }
 
-    getInvitationsByEventAndOrganizer(eventId: string): Observable<Response> {
+    getInvitationsByEvent(eventId: string): Observable<Response> {
         return this.http.get<Response>(`${this.url}/${eventId}/invitations`);
     }
 
     // Participants
-    getParticipantsByEventAndOrganizer(eventId: string): Observable<Response> {
+    getParticipantsByEvent(eventId: string): Observable<Response> {
         return this.http.get<Response>(`${this.url}/${eventId}/participants`);
     }
 

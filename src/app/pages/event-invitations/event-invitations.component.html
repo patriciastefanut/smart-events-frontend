@@ -1,1 +1,84 @@
-<p>event-invitations works!</p>
+<div class="container mt-4">
+    <h2 class="mb-4">Event Invitations</h2>
+
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Sent At</th>
+                <th>Responded At</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let invite of invitations">
+                <td>{{ invite.email }}</td>
+                <td>{{ invite.firstname }} {{ invite.lastname }}</td>
+                <td><span class="badge bg-secondary text-capitalize">{{ invite.status }}</span></td>
+                <td>{{ invite.sentAt | date: 'dd.MM.yyyy HH:mm' }}</td>
+                <td>{{ invite.respondedAt ? (invite.respondedAt | date: 'dd.MM.yyyy HH:mm') : '-' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#sendInvitationsModal">
+        Send Invitations
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="sendInvitationsModal" tabindex="-1" aria-labelledby="sendInvitationsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <form class="modal-content" (submit)="onSubmit($event)">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sendInvitationsModalLabel">Send New Invitations</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        (click)="clearForm()"></button>
+                </div>
+                <div class="modal-body">
+                    <div *ngFor="let contact of contacts; let i = index" class="mb-3 border rounded p-3 bg-light">
+                        <!-- First row: firstname + lastname -->
+                        <div class="row mb-2">
+                            <div class="col">
+                                <input type="text" class="form-control" [(ngModel)]="contact.firstname"
+                                    name="firstname{{i}}" placeholder="First Name">
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" [(ngModel)]="contact.lastname"
+                                    name="lastname{{i}}" placeholder="Last Name">
+                            </div>
+                        </div>
+
+                        <!-- Second row: email + remove -->
+                        <div class="row">
+                            <div class="col-10">
+                                <input type="email" class="form-control" [(ngModel)]="contact.email" name="email{{i}}"
+                                    placeholder="Email" required>
+                            </div>
+                            <div class="col-2 text-end">
+                                <button type="button" class="btn btn-danger w-100" (click)="removeContact(i)"
+                                    *ngIf="contacts.length > 1">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-outline-primary mb-3" (click)="addContact()">Add Another
+                        Contact</button>
+
+                    <div class="mb-3">
+                        <input type="date" id="respondBefore" class="form-control" [(ngModel)]="respondBefore"
+                            name="respondBefore" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Send</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        (click)="clearForm()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
