@@ -9,6 +9,7 @@ import { ManualEventFormComponent } from './pages/manual-event-form/manual-event
 import { ViewEventComponent } from './pages/view-event/view-event.component';
 import { EventOverviewComponent } from './pages/event-overview/event-overview.component';
 import { EventInvitationsComponent } from './pages/event-invitations/event-invitations.component';
+import { PublicEventInvitationComponent } from './pages/public-event-invitation/public-event-invitation.component';
 
 export const routes: Routes = [
     {
@@ -43,6 +44,9 @@ export const routes: Routes = [
             },
 
         ]
+    },
+    {
+        path: 'events/:eventUUID/invitations/:invitationUUID', component: PublicEventInvitationComponent
     },
     {
         path: 'not-found', component: NotFoundComponent

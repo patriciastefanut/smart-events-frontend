@@ -1,0 +1,33 @@
+<div class="card my-4 shadow-sm" *ngIf="invitation">
+    <div class="card-body">
+        <h2 class="card-title text-primary">You're Invited!</h2>
+
+        <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item"><strong>First Name:</strong> {{ invitation.firstname }}</li>
+            <li class="list-group-item"><strong>Last Name:</strong> {{ invitation.lastname }}</li>
+            <li class="list-group-item"><strong>Email:</strong> {{ invitation.email }}</li>
+            <li class="list-group-item">
+                <strong>Status: </strong>
+                <span [ngClass]="{
+          'text-warning': invitation.status === 'pending',
+          'text-success': invitation.status === 'accepted',
+          'text-danger': invitation.status === 'declined' || invitation.status === 'cancelled'
+        }">{{ invitation.status | uppercase }}</span>
+            </li>
+            <li class="list-group-item">
+                <strong>Respond Before:</strong> {{ invitation.respondBefore | date:'medium' }}
+            </li>
+        </ul>
+
+        <div class="d-flex gap-2" *ngIf="invitation.status === 'pending'">
+            <button class="btn btn-success flex-fill" (click)="acceptInvitation()">Accept</button>
+            <button class="btn btn-danger flex-fill" (click)="declineInvitation()">Decline</button>
+        </div>
+
+        <div class="d-flex gap-2" *ngIf="invitation.status === 'accepted'">
+            <button class="btn btn-warning flex-fill" (click)="cancelInvitation()">Cancel</button>
+        </div>
+
+        <!-- No buttons for declined or cancelled -->
+    </div>
+</div>

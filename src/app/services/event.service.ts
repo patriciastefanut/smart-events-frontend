@@ -31,6 +31,11 @@ export class EventService {
     }
 
     // Invitations (Public Routes)
+
+    getInvitation(eventUUID: string, invitationUUID: string): Observable<Response> {
+        return this.http.get<Response>(`${this.url}/${eventUUID}/invitations/${invitationUUID}`);
+    }
+
     respondToInvitation(eventUUID: string, invitationUUID: string, data: any): Observable<Response> {
         return this.http.post<Response>(`${this.url}/${eventUUID}/invitations/${invitationUUID}`, data);
     }

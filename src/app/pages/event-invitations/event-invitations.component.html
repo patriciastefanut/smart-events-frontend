@@ -1,5 +1,5 @@
 <div class="container mt-4">
-    <h2 class="mb-4">Event Invitations</h2>
+    <h2 class="mb-4">Event Invitations ({{invitations.length}} in total)</h2>
 
     <table class="table table-striped">
         <thead class="table-dark">
@@ -74,7 +74,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Send</button>
+                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal"
+                        [disabled]="!respondBefore">Send</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         (click)="clearForm()">Cancel</button>
                 </div>
