@@ -10,6 +10,7 @@ import { ViewEventComponent } from './pages/view-event/view-event.component';
 import { EventOverviewComponent } from './pages/event-overview/event-overview.component';
 import { EventInvitationsComponent } from './pages/event-invitations/event-invitations.component';
 import { PublicEventInvitationComponent } from './pages/public-event-invitation/public-event-invitation.component';
+import { EventSpendingsComponent } from './pages/event-spendings/event-spendings.component';
 
 export const routes: Routes = [
     {
@@ -38,6 +39,9 @@ export const routes: Routes = [
             },
             {
                 path: 'invitations', component: EventInvitationsComponent,
+            },
+            {
+                path: 'spendings', component: EventSpendingsComponent,
             },
             {
                 path: 'update', component: ManualEventFormComponent,

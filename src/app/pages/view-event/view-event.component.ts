@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Event } from '../../models/event';
 import { EventState } from '../../states/event.state';
 import { InvitationsState } from '../../states/invitations.state';
+import { SpendingState } from '../../states/spending.state';
 
 @Component({
   selector: 'app-view-event',
@@ -20,6 +21,7 @@ export class ViewEventComponent implements OnInit {
   constructor(private api: EventService,
     private eventState: EventState,
     private invitationState: InvitationsState,
+    private spendingState: SpendingState,
     private route: ActivatedRoute,
     private router: Router) {
     effect(() => {
@@ -38,6 +40,7 @@ export class ViewEventComponent implements OnInit {
 
     this.getEvent(eventId);
     this.getInvitations(eventId);
+    this.getSpendings(eventId);
 
   }
 
@@ -66,6 +69,18 @@ export class ViewEventComponent implements OnInit {
     })
   }
 
+  getSpendings(eventId: string) {
+    this.api.getSpendingsByEvent(eventId).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.spendingState.setSpendings(res['spendings']);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
   overView() {
     this.router.navigate(['events', this.event!.id]);
   }
@@ -75,6 +90,6 @@ export class ViewEventComponent implements OnInit {
   }
 
   spendings() {
-    this.router.navigate(['event', this.event!.id, 'spendings'])
+    this.router.navigate(['events', this.event!.id, 'spendings'])
   }
 }

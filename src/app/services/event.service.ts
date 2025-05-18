@@ -103,5 +103,27 @@ export class EventService {
     getEventFeedbacks(eventId: string): Observable<Response> {
         return this.http.get<Response>(`${this.url}/${eventId}/feedbacks`);
     }
+
+
+    // Spendings
+    getSpendingsByEvent(eventId: string): Observable<Response> {
+        return this.http.get<Response>(`${this.url}/${eventId}/spendings`);
+    }
+
+    getSpendingById(eventId: string, spendingId: string): Observable<Response> {
+        return this.http.get<Response>(`${this.url}/${eventId}/spendings/${spendingId}`);
+    }
+
+    createSpending(eventId: string, data: any): Observable<Response> {
+        return this.http.post<Response>(`${this.url}/${eventId}/spendings`, data);
+    }
+
+    updateSpending(eventId: string, spendingId: string, data: any): Observable<Response> {
+        return this.http.patch<Response>(`${this.url}/${eventId}/spendings/${spendingId}`, data);
+    }
+
+    deleteSpending(eventId: string, spendingId: string): Observable<Response> {
+        return this.http.delete<Response>(`${this.url}/${eventId}/spendings/${spendingId}`);
+    }
 }
 
