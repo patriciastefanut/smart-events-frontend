@@ -1,18 +1,18 @@
 import { signal, computed, Injectable } from '@angular/core';
 import { Participant } from '../models/participant';
 
-@Injectable({providedIn: 'root'})
-export class ParticipantState {
+@Injectable({ providedIn: 'root' })
+export class ParticipantsState {
 
-    private _participant = signal<Participant | null>(null);
+    private _participants = signal<Participant[]>([]);
 
-    participant = computed(() => this._participant);
+    participants = computed(() => this._participants());
 
-    setParticipant(participant: Participant | null) {
-        this._participant.set(participant);
+    setParticipants(participants: Participant[]) {
+        this._participants.set(participants);
     }
 
-    clearParticipant(): void {
-        this._participant.set(null);
+    clearParticipants(): void {
+        this._participants.set([]);
     }
 }

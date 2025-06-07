@@ -11,6 +11,7 @@ import { EventOverviewComponent } from './pages/event-overview/event-overview.co
 import { EventInvitationsComponent } from './pages/event-invitations/event-invitations.component';
 import { PublicEventInvitationComponent } from './pages/public-event-invitation/public-event-invitation.component';
 import { EventSpendingsComponent } from './pages/event-spendings/event-spendings.component';
+import { EventParticipantsComponent } from './pages/event-participants/event-participants.component';
 
 export const routes: Routes = [
     {
@@ -42,6 +43,9 @@ export const routes: Routes = [
             },
             {
                 path: 'spendings', component: EventSpendingsComponent,
+            },
+            {
+                path: 'participants', component: EventParticipantsComponent,
             },
             {
                 path: 'update', component: ManualEventFormComponent,

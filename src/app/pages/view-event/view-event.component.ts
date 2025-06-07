@@ -7,6 +7,7 @@ import { Event } from '../../models/event';
 import { EventState } from '../../states/event.state';
 import { InvitationsState } from '../../states/invitations.state';
 import { SpendingState } from '../../states/spending.state';
+import { ParticipantsState } from '../../states/participant.state';
 
 @Component({
   selector: 'app-view-event',
@@ -22,6 +23,7 @@ export class ViewEventComponent implements OnInit {
     private eventState: EventState,
     private invitationState: InvitationsState,
     private spendingState: SpendingState,
+    private participantsState: ParticipantsState,
     private route: ActivatedRoute,
     private router: Router) {
     effect(() => {
@@ -41,6 +43,7 @@ export class ViewEventComponent implements OnInit {
     this.getEvent(eventId);
     this.getInvitations(eventId);
     this.getSpendings(eventId);
+    this.getParticipants(eventId);
 
   }
 
@@ -81,6 +84,18 @@ export class ViewEventComponent implements OnInit {
     })
   }
 
+  getParticipants(eventId: string) {
+    this.api.getParticipantsByEvent(eventId).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.participantsState.setParticipants(res['participants']);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
   overView() {
     this.router.navigate(['events', this.event!.id]);
   }
@@ -91,5 +106,9 @@ export class ViewEventComponent implements OnInit {
 
   spendings() {
     this.router.navigate(['events', this.event!.id, 'spendings'])
+  }
+
+  participants() {
+    this.router.navigate(['events', this.event!.id, 'participants'])
   }
 }

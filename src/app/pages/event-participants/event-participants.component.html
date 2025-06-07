@@ -1,0 +1,107 @@
+<div class="container mt-5">
+    <h2 class="mb-4">Participants</h2>
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Checked In</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let participant of participants">
+                <td>{{ participant.firstname }} {{ participant.lastname }}</td>
+                <td>{{ participant.email }}</td>
+                <td>
+                    <span class="badge" [ngClass]="participant.checkedIn ? 'bg-success' : 'bg-secondary'">
+                        {{ participant.checkedIn ? 'Yes' : 'No' }}
+                    </span>
+                </td>
+                <td class="text-center">
+                    <button class="btn btn-sm btn-primary me-2" data-bs-toggle="modal"
+                        data-bs-target="#editParticipantModal" (click)="setSelectedParticipant(participant)">
+                        <i class="bi bi-pencil-square"></i> Edit
+                    </button>
+                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#deleteParticipantModal" (click)="setSelectedParticipant(participant)">
+                        <i class="bi bi-trash"></i> Delete
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editParticipantModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form (ngSubmit)="updateParticipant()" #editForm="ngForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Participant</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" *ngIf="selectedParticipant">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-control" [(ngModel)]="selectedParticipant.firstname"
+                                name="firstname" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-control" [(ngModel)]="selectedParticipant.lastname"
+                                name="lastname" required />
+                        </div>
+                    </div>
+
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" [(ngModel)]="selectedParticipant.email" name="email"
+                            required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Dietary Restrictions</label>
+                        <input type="text" class="form-control" [(ngModel)]="selectedParticipant.dietaryRestrictions"
+                            name="dietaryRestrictions" />
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" [(ngModel)]="selectedParticipant.checkedIn"
+                            name="checkedIn" />
+                        <label class="form-check-label">Checked In</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Update</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteParticipantModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete
+                <strong>{{ selectedParticipant?.firstname }} {{ selectedParticipant?.lastname }}</strong>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" (click)="deleteParticipant()" data-bs-dismiss="modal">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
