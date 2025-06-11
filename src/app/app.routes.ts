@@ -12,6 +12,7 @@ import { EventInvitationsComponent } from './pages/event-invitations/event-invit
 import { PublicEventInvitationComponent } from './pages/public-event-invitation/public-event-invitation.component';
 import { EventSpendingsComponent } from './pages/event-spendings/event-spendings.component';
 import { EventParticipantsComponent } from './pages/event-participants/event-participants.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -21,45 +22,51 @@ export const routes: Routes = [
         path: 'register', component: RegisterComponent
     },
     {
-        path: 'account', component: UserComponent,
-    },
-    {
-        path: 'events', component: EventsComponent,
-    },
-    {
-        path: 'events/create-ai', component: AiEventFormComponent,
-    },
-    {
-        path: 'events/create-manual', component: ManualEventFormComponent,
-    },
-    {
-        path: 'events/:eventId', component: ViewEventComponent,
+        path: '',
+        canActivate: [authGuard],
         children: [
             {
-                path: '', component: EventOverviewComponent,
+                path: 'account', component: UserComponent,
             },
             {
-                path: 'invitations', component: EventInvitationsComponent,
+                path: 'events', component: EventsComponent,
             },
             {
-                path: 'spendings', component: EventSpendingsComponent,
+                path: 'events/create-ai', component: AiEventFormComponent,
             },
             {
-                path: 'participants', component: EventParticipantsComponent,
+                path: 'events/create-manual', component: ManualEventFormComponent,
             },
             {
-                path: 'update', component: ManualEventFormComponent,
-            },
+                path: 'events/:eventId', component: ViewEventComponent,
+                children: [
+                    {
+                        path: '', component: EventOverviewComponent,
+                    },
+                    {
+                        path: 'invitations', component: EventInvitationsComponent,
+                    },
+                    {
+                        path: 'spendings', component: EventSpendingsComponent,
+                    },
+                    {
+                        path: 'participants', component: EventParticipantsComponent,
+                    },
+                    {
+                        path: 'update', component: ManualEventFormComponent,
+                    },
 
+                ]
+            },
+            {
+                path: 'events/:eventUUID/invitations/:invitationUUID', component: PublicEventInvitationComponent
+            },
+            {
+                path: 'not-found', component: NotFoundComponent
+            },
+            {
+                path: '**', redirectTo: 'not-found'
+            }
         ]
-    },
-    {
-        path: 'events/:eventUUID/invitations/:invitationUUID', component: PublicEventInvitationComponent
-    },
-    {
-        path: 'not-found', component: NotFoundComponent
-    },
-    {
-        path: '**', redirectTo: 'not-found'
     }
 ];

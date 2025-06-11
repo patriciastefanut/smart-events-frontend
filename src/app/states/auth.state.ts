@@ -6,9 +6,16 @@ export class AuthState {
 
     private _token = signal<string | null>(localStorage.getItem('token') || null);
     private _userId = signal<string | null>(localStorage.getItem('userId') || null);
+    private _tokenExpiresIn = signal<Date | null>(
+        localStorage.getItem('tokenExpiresIn') ? new Date(localStorage.getItem('tokenExpiresIn')!) : null
+    );
 
+    isLoggedIn = computed(() =>
+        this._token() !== null &&
+        this._tokenExpiresIn() !== null &&
+        new Date() < this._tokenExpiresIn()!
+    );
 
-    isLoggedIn = computed(() => this._token() !== null);
     token = computed(() => this._token());
     userId = computed(() => this._userId());
 
@@ -16,10 +23,18 @@ export class AuthState {
 
     setToken(newToken: string | null) {
         this._token.set(newToken);
+
         if (newToken) {
             localStorage.setItem('token', newToken);
+
+            // Set expiration to 1 hour from now
+            const expiry = new Date(Date.now() + 60 * 60 * 1000);
+            this._tokenExpiresIn.set(expiry);
+            localStorage.setItem('tokenExpiresIn', expiry.toISOString());
         } else {
             localStorage.removeItem('token');
+            this._tokenExpiresIn.set(null);
+            localStorage.removeItem('tokenExpiresIn');
         }
     }
 
@@ -35,6 +50,6 @@ export class AuthState {
     logout() {
         this.setToken(null);
         this.setUserId(null);
-        this.router.navigate(['/login'])
+        this.router.navigate(['/login']);
     }
 }
