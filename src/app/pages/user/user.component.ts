@@ -75,7 +75,6 @@ export class UserComponent implements OnInit {
   loadUser() {
     this.userService.getUser(this.userId).subscribe({
       next: (res) => {
-        console.log(res);
         this.userState.setUser(res['user']);
 
       },
@@ -115,7 +114,6 @@ export class UserComponent implements OnInit {
   }
 
   onPasswordSubmit() {
-    console.log(this.passwordForm.invalid);
     if (this.passwordForm.invalid) {
       this.passwordForm.markAllAsTouched();
       return;
@@ -130,7 +128,7 @@ export class UserComponent implements OnInit {
         this.successMessage = 'Password changed successfully.';
         this.errorMessage = '';
         this.isLoading = false;
-        this.passwordForm.reset(); // Reset after success
+        this.passwordForm.reset();
       },
       error: (err) => {
         this.errorMessage = err?.error?.message || 'Failed to change password.';
@@ -147,7 +145,6 @@ export class UserComponent implements OnInit {
       this.profileForm.patchValue({ file });
       this.profileForm.updateValueAndValidity();
 
-      // preview image
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.selectedProfilePicturePreview = e.target.result;

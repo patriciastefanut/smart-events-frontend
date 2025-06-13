@@ -40,9 +40,6 @@ export class LoginComponent implements OnInit {
     this.isLoading = true;
     this.api.login(this.form.value).subscribe({
       next: (response) => {
-
-        console.log('Login successful', response);
-
         this.authState.setToken(response['token']);
         this.authState.setUserId(response['userId']);
         this.router.navigate(['/']);

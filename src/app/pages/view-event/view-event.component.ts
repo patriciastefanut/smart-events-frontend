@@ -51,11 +51,10 @@ export class ViewEventComponent implements OnInit {
   getEvent(eventId: string) {
     this.api.getEventById(eventId).subscribe({
       next: (res) => {
-        console.log(res);
         this.eventState.setEvent(res['event']);
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
       }
     })
   }
@@ -63,11 +62,10 @@ export class ViewEventComponent implements OnInit {
   getInvitations(eventId: string) {
     this.api.getInvitationsByEvent(eventId).subscribe({
       next: (res) => {
-        console.log(res);
         this.invitationState.setInvitations(res['invitations']);
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
       }
     })
   }
@@ -75,11 +73,10 @@ export class ViewEventComponent implements OnInit {
   getSpendings(eventId: string) {
     this.api.getSpendingsByEvent(eventId).subscribe({
       next: (res) => {
-        console.log(res);
         this.spendingState.setSpendings(res['spendings']);
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
       }
     })
   }
@@ -87,11 +84,10 @@ export class ViewEventComponent implements OnInit {
   getParticipants(eventId: string) {
     this.api.getParticipantsByEvent(eventId).subscribe({
       next: (res) => {
-        console.log(res);
         this.participantsState.setParticipants(res['participants']);
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
       }
     })
   }

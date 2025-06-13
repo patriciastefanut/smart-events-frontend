@@ -59,7 +59,7 @@ export class EventInvitationsComponent {
         this.invitationState.addInvitations(res['invitations']);
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
       }
     });
   }

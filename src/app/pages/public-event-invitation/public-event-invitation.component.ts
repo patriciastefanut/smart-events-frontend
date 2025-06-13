@@ -35,7 +35,7 @@ export class PublicEventInvitationComponent implements OnInit {
         this.invitation = res['invitation'];
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
       }
     })
   }
@@ -46,10 +46,9 @@ export class PublicEventInvitationComponent implements OnInit {
     this.api.respondToInvitation(this.eventUUID, this.invitationUUID, { status: this.status }).subscribe({
       next: (res) => {
         this.invitation = res['invitation'];
-        console.log(res);
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
       }
     })
   }
@@ -59,7 +58,6 @@ export class PublicEventInvitationComponent implements OnInit {
     if (!confirmAccept) return;
     this.status = 'accepted';
     this.respondToInvitation();
-    console.log('accept invite');
   }
 
   declineInvitation() {
@@ -67,7 +65,6 @@ export class PublicEventInvitationComponent implements OnInit {
     if (!confirmAccept) return;
     this.status = 'declined';
     this.respondToInvitation();
-    console.log('decline invite');
   }
 
 
@@ -75,15 +72,12 @@ export class PublicEventInvitationComponent implements OnInit {
     const confirmAccept = window.confirm('Are you sure you want to cancel the invitation?');
     if (!confirmAccept) return;
 
-    console.log('cancel invite');
-
     this.api.cancelInvitation(this.eventUUID, this.invitationUUID).subscribe({
       next: (res) => {
         this.invitation.status = 'cancelled';
-        console.log(res);
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
       }
     })
   }

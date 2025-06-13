@@ -6,10 +6,15 @@
             Add
         </button>
     </div>
+    
+    <div *ngIf="spendings.length === 0" class="alert alert-info">
+        No participants yet.
+    </div>
 
-    <app-spending-chart />
+    <app-spending-chart *ngIf="spendings.length > 0"/>
 
-    <table class="table table-bordered table-hover">
+
+    <table class="table table-bordered table-hover" *ngIf="spendings.length > 0">
         <thead class="table-light">
             <tr>
                 <th>Title</th>

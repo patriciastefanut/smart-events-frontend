@@ -84,13 +84,12 @@ export class EventSpendingsComponent {
   createSpending() {
     this.eventService.createSpending(this.eventId, this.spendingForm.value).subscribe({
       next: (res) => {
-        console.log(res);
         this.spendingState.addSpending(res['spending']);
         this.initForm();
         this.selectedSpending = null;
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
       }
     })
   }
@@ -98,13 +97,12 @@ export class EventSpendingsComponent {
   updateSpending() {
     this.eventService.updateSpending(this.eventId, this.selectedSpending!.id, this.spendingForm.value).subscribe({
       next: (res) => {
-        console.log(res);
         this.spendingState.updateSpending(res['spending']);
         this.initForm();
         this.selectedSpending = null;
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
       }
     })
   }

@@ -1,0 +1,23 @@
+<div class="container mt-4">
+    <h2 class="handwriting-dancing">Upcoming Events</h2>
+    <div *ngIf="events.length === 0">
+        <p>No upcoming events.</p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 g-4" *ngIf="events.length">
+        <div class="col" *ngFor="let event of events">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title handwriting-caveat">{{ event.title }}</h5>
+                    <p class="card-text">{{ event.description }}</p>
+                    <p><strong>From:</strong> {{ event.from | date:'medium' }}</p>
+                    <p><strong>Until:</strong> {{ event.until | date:'medium' }}</p>
+                    <p><strong>Guests:</strong> {{ event.guestCount }}</p>
+                    <p><strong>Location:</strong> {{ event.location.name }}</p>
+                    <p class="text-primary"><strong>Time until start:</strong> {{ countdowns[event.id] }}</p>
+                    <a [routerLink]="['/events', event.id]" class="btn btn-outline-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

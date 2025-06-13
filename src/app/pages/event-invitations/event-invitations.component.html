@@ -1,7 +1,16 @@
 <div class="container mt-4">
-    <h2 class="mb-4">Event Invitations ({{invitations.length}} in total)</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Event Invitations ({{ invitations.length }} in total)</h2>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sendInvitationsModal">
+            Send Invitations
+        </button>
+    </div>
 
-    <table class="table table-striped">
+    <div *ngIf="invitations.length === 0" class="alert alert-info">
+        No invitations have been sent yet.
+    </div>
+
+    <table class="table table-striped" *ngIf="invitations.length > 0">
         <thead class="table-dark">
             <tr>
                 <th>Email</th>
@@ -21,10 +30,6 @@
             </tr>
         </tbody>
     </table>
-
-    <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#sendInvitationsModal">
-        Send Invitations
-    </button>
 
     <!-- Modal -->
     <div class="modal fade" id="sendInvitationsModal" tabindex="-1" aria-labelledby="sendInvitationsModalLabel"

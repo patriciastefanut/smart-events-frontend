@@ -45,7 +45,7 @@ export class SpendingChartComponent {
     for (const spend of this.spendingState.spendings()) {
       const dt = new Date(spend.date);
       const timeLabel = dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      const label = `${dt.toISOString().split('T')[0]} ${timeLabel}`; // e.g. "2025-06-13 14:30"
+      const label = `${dt.toISOString().split('T')[0]} ${timeLabel}`;
       const method = spend.paymentMethod;
 
       if (!grouped[method].has(label)) grouped[method].set(label, 0);
@@ -63,8 +63,6 @@ export class SpendingChartComponent {
         label: method
       }))
     };
-
-    // this.chart?.update();
   }
 
 }

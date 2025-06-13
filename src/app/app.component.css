@@ -20,3 +20,31 @@
 .list-group-item:hover {
     background-color: #f8f9fa;
 }
+
+
+.navbar-custom {
+    background-color: var(--primary-color) !important;
+    /* #adceed */
+}
+
+.navbar-custom .nav-link,
+.navbar-custom .navbar-brand {
+    color: #fff8e7 !important;
+    /* high-contrast creamy */
+}
+
+.navbar-custom .nav-link:hover,
+.navbar-custom .navbar-brand:hover {
+    color: #ffffff !important;
+}
+
+/* Keep logout red */
+.navbar-custom .nav-link.text-danger {
+    color: #dc3545 !important;
+    /* Bootstrap danger red */
+}
+
+.navbar-custom .nav-link.text-danger:hover {
+    color: #a71d2a !important;
+    /* Darker red on hover */
+}

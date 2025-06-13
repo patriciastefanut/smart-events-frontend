@@ -52,12 +52,11 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    const { firstname, lastname, email, password } = this.form.value; // only these go to API
+    const { firstname, lastname, email, password } = this.form.value;
 
     this.isLoading = true;
     this.api.register({ firstname, lastname, email, password }).subscribe({
       next: (response) => {
-        console.log('Register successful', response);
         this.authState.setToken(response['token']);
         this.authState.setUserId(response['userId']);
         this.router.navigate(['/']);

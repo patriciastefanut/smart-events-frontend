@@ -30,7 +30,7 @@ export class EventsComponent implements OnInit {
         this.events = res['events'];
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
       }
     })
   }

@@ -13,6 +13,7 @@ import { PublicEventInvitationComponent } from './pages/public-event-invitation/
 import { EventSpendingsComponent } from './pages/event-spendings/event-spendings.component';
 import { EventParticipantsComponent } from './pages/event-participants/event-participants.component';
 import { authGuard } from './guards/auth.guard';
+import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
     {
@@ -25,6 +26,9 @@ export const routes: Routes = [
         path: '',
         canActivate: [authGuard],
         children: [
+            {
+                path: '', component: HomeComponent,
+            },
             {
                 path: 'account', component: UserComponent,
             },

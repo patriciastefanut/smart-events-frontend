@@ -27,7 +27,6 @@ export class AuthState {
         if (newToken) {
             localStorage.setItem('token', newToken);
 
-            // Set expiration to 1 hour from now
             const expiry = new Date(Date.now() + 60 * 60 * 1000);
             this._tokenExpiresIn.set(expiry);
             localStorage.setItem('tokenExpiresIn', expiry.toISOString());

@@ -21,7 +21,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const token = authState.token();
 
   if (!token) {
-    // No token, just proceed with the request
     return next(req);
   }
 
