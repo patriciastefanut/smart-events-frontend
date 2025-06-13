@@ -5,10 +5,11 @@ import { EventService } from '../../services/event.service';
 import { EventState } from '../../states/event.state';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SpendingChartComponent } from "../spending-chart/spending-chart.component";
 
 @Component({
   selector: 'app-event-spendings',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SpendingChartComponent],
   templateUrl: './event-spendings.component.html',
   styleUrl: './event-spendings.component.css'
 })
